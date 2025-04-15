@@ -2,51 +2,35 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Visualizzatore Video Instagram</title>
+  <title>Apri con ddInstagram</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 2em; }
-    video { width: 100%; max-width: 600px; height: auto; border-radius: 12px; }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 3em;
+    }
   </style>
 </head>
 <body>
-  <h1>Video Instagram</h1>
-  <p id="status">Caricamento...</p>
-  <video id="video" controls autoplay style="display:none;"></video>
+  <h1>Reindirizzamento al video...</h1>
+  <p id="info">Attendere qualche secondo...</p>
 
   <script>
-    async function fetchInstagramVideo(instagramURL) {
-      const api = `https://instagram-video-api.vercel.app/?url=${encodeURIComponent(instagramURL)}`;
-      const res = await fetch(api);
-      const data = await res.json();
-      return data.video_url;
-    }
-
-    async function init() {
+    function redirectToDDInstagram() {
       const params = new URLSearchParams(window.location.search);
-      const igURL = params.get("url");
+      const originalURL = params.get("url");
 
-      if (!igURL || !igURL.includes("instagram.com")) {
-        document.getElementById("status").textContent = "URL Instagram non valido.";
+      if (!originalURL || !originalURL.includes("instagram.com")) {
+        document.getElementById("info").innerText = "Link non valido o mancante.";
         return;
       }
 
-      try {
-        const videoURL = await fetchInstagramVideo(igURL);
-        if (videoURL) {
-          const video = document.getElementById("video");
-          video.src = videoURL;
-          video.style.display = "block";
-          document.getElementById("status").style.display = "none";
-        } else {
-          document.getElementById("status").textContent = "Video non trovato.";
-        }
-      } catch (e) {
-        document.getElementById("status").textContent = "Errore durante il caricamento.";
-      }
+      const ddURL = originalURL.replace("instagram.com", "ddinstagram.com");
+      window.location.href = ddURL;
     }
 
-    init();
+    window.onload = redirectToDDInstagram;
   </script>
 </body>
 </html>
