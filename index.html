@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect Video Instagram</title>
+  <script>
+    function getInstagramURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("url");
+    }
+
+    async function redirectToSnapSave() {
+      const igURL = getInstagramURL();
+
+      if (!igURL || !igURL.includes("instagram.com")) {
+        document.body.innerHTML = "<h2>URL Instagram non valido.</h2>";
+        return;
+      }
+
+      // Reindirizza verso SnapSave
+      const redirectURL = "https://snapsave.app/it/download-video-instagram?url=" + encodeURIComponent(igURL);
+      window.location.href = redirectURL;
+    }
+
+    window.onload = redirectToSnapSave;
+  </script>
+</head>
+<body>
+  <p>Reindirizzamento in corso...</p>
+</body>
+</html>
