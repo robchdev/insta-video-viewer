@@ -2,34 +2,25 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Apri con ddInstagram</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding-top: 3em;
-    }
-  </style>
+  <title>Redirect a ddInstagram</title>
 </head>
 <body>
-  <h1>Reindirizzamento al video...</h1>
-  <p id="info">Attendere qualche secondo...</p>
+  <h2>Stai per essere reindirizzato al video...</h2>
 
   <script>
-    function redirectToDDInstagram() {
-      const params = new URLSearchParams(window.location.search);
-      const originalURL = params.get("url");
+    const params = new URLSearchParams(window.location.search);
+    const originalURL = params.get("url");
 
-      if (!originalURL || !originalURL.includes("instagram.com")) {
-        document.getElementById("info").innerText = "Link non valido o mancante.";
-        return;
-      }
+    if (!originalURL || !originalURL.includes("instagram.com")) {
+      document.body.innerHTML = "<p>Link Instagram non valido</p>";
+    } else {
+      const ddLink = originalURL.replace("instagram.com", "ddinstagram.com");
 
-      const ddURL = originalURL.replace("instagram.com", "ddinstagram.com");
-window.open(ddURL, "_blank");    }
-
-    window.onload = redirectToDDInstagram;
+      // 💥 Apertura in nuova finestra per evitare redirect forzati
+      const win = window.open("", "_blank");
+      win.document.write(`<p>Attendi...</p><script>location.href='${ddLink}'<\/script>`);
+      window.close();
+    }
   </script>
 </body>
 </html>
